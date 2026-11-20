@@ -1,0 +1,24 @@
+//@version=6
+indicator("BERMAN BOT - Confluencia Real [Sem Repintar]", overlay=true)
+emaLen = input.int(200, "EMA Tendencia")
+rsiLen = input.int(14, "RSI")
+volLen = input.int(20, "Media Volume")
+ema200 = ta.ema(close, emaLen)
+rsi = ta.rsi(close, rsiLen)
+volMedia = ta.sma(volume, volLen)
+volForte = volume > volMedia
+topo = ta.highest(high, 20)
+fundo = ta.lowest(low, 20)
+rompeuTopo = close > topo[1]
+rompeuFundo = close < fundo[1]
+tendAlta = close > ema200
+tendBaixa = close < ema200
+sinalCALL = tendAlta and rompeuTopo and volForte and rsi > 50 and rsi < 70 and barstate.isconfirmed
+sinalPUT = tendBaixa and rompeuFundo and volForte and rsi < 50 and rsi > 30 and barstate.isconfirmed
+plot(ema200, "EMA 200", color=color.new(color.pink, 0), linewidth=2)
+plotshape(sinalCALL, "CALL", shape.labelup, location.belowbar, color.new(color.green, 0), text="CALL", textcolor=color.white, size=size.small)
+plotshape(sinalPUT, "PUT", shape.labeldown, location.abovebar, color.new(color.red, 0), text="PUT", textcolor=color.white, size=size.small)
+if sinalCALL
+    alert('{"fonte":"tradingview","par":"{{ticker}}","direcao":"CALL","preco":{{close}},"timeframe":"{{interval}}","rsi":' + str.tostring(rsi) + ',"volume":' + str.tostring(volume) + ',"volMedia":' + str.tostring(volMedia) + ',"ema200":' + str.tostring(ema200) + '}', alert.freq_once_per_bar_close)
+if sinalPUT
+    alert('{"fonte":"tradingview","par":"{{ticker}}","direcao":"PUT","preco":{{close}},"timeframe":"{{interval}}","rsi":' + str.tostring(rsi) + ',"volume":' + str.tostring(volume) + ',"volMedia":' + str.tostring(volMedia) + ',"ema200":' + str.tostring(ema200) + '}', alert.freq_once_per_bar_close)

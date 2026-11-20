@@ -1,0 +1,7 @@
+BERMAN BOT - INSTALAR EM 3 MINUTOS
+1. Suba esta pasta no GitHub (drag and drop)
+2. Render.com > New > Web Service > conecte o GitHub > Build: npm install / Start: npm start
+3. Em Environment, coloque: WEBHOOK_SECRET=berman-123, OPENAI_API_KEY, META_AI_API_KEY
+4. Abra https://SUA-URL.onrender.com/ - tem que aparecer o painel
+5. TradingView: webhook https://SUA-URL.onrender.com/webhook/tradingview
+Pronto.

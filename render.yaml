@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: berman-bot
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: WEBHOOK_SECRET
+        value: berman-123
+      - key: META_AI_API_URL
+        value: https://api.llama.com/v1/chat/completions
+      - key: META_AI_MODEL
+        value: Llama-4-Maverick-17B-128E-Instruct-FP8
